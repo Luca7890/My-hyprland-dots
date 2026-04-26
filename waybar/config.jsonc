@@ -1,0 +1,227 @@
+// ~/.config/waybar/config.jsonc
+{
+  // ════════════════════════════════
+  // GLOBAL
+  // ════════════════════════════════
+  "layer": "top",
+  "position": "top",
+
+  "height": 30,
+  "spacing": 5,
+
+  "margin-top": 8,
+  "margin-right": 10,
+  "margin-left": 10,
+  "margin-bottom": 0,
+
+  "reload_style_on_change": true,
+
+  // ════════════════════════════════
+  // MÓDULOS (LAYOUT)
+  // ════════════════════════════════
+
+  "modules-left": [
+    "clock",
+    "tray",
+    "hyprland/workspaces"
+  ],
+
+  "modules-center": [
+    "custom/media"
+  ],
+
+  "modules-right": [
+    "custom/swaync",
+    "network",
+    "pulseaudio",
+    "battery",
+    "power-profiles-daemon",
+    "custom/power"
+  ],
+
+  // ════════════════════════════════
+  // CLOCK
+  // ════════════════════════════════
+  "clock": {
+    "interval": 1,
+    "format": "󰅐 {:%I:%M %p}",
+    "format-alt": "{:%A, %d %B %Y}",
+
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+
+    "calendar": {
+      "mode": "month",
+      "on-scroll": 1,
+      "format": {
+        "today": "<span color='#f4a0b8'><b><u>{}</u></b></span>"
+      }
+    }
+  },
+
+  // ════════════════════════════════
+  // TRAY
+  // ════════════════════════════════
+  "tray": {
+    "icon-size": 14,
+    "spacing": 5
+  },
+
+  // ════════════════════════════════
+  // WORKSPACES
+  // ════════════════════════════════
+  "hyprland/workspaces": {
+    "active-only": false,
+    "all-outputs": true,
+    "format": "{icon}",
+    "show-special": false,
+
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+
+    "persistent-workspaces": { "*": 5 },
+
+    "format-icons": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5"
+    }
+  },
+
+  // ════════════════════════════════
+  // MEDIA (MPRIS)
+  // ════════════════════════════════
+  "custom/media": {
+    "format": "{}",
+    "return-type": "json",
+
+    "exec": "~/.config/waybar/scripts/media.sh",
+    "tail": true,
+
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous"
+  },
+
+  // ════════════════════════════════
+  // NOTIFICACIONES (SwayNC)
+  // ════════════════════════════════
+  "custom/swaync": {
+    "tooltip": false,
+    "format": "{} {icon}",
+    "return-type": "json",
+
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+
+    "on-click": "sleep 0.1 && swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+
+    "escape": true,
+
+    "format-icons": {
+      "notification":               "󰂚",
+      "none":                       "󰂜",
+      "dnd-notification":           "󰂛",
+      "dnd-none":                   "󰂛",
+      "inhibited-notification":     "󰂚",
+      "inhibited-none":             "󰂜",
+      "dnd-inhibited-notification": "󰂛",
+      "dnd-inhibited-none":         "󰂛"
+    }
+  },
+
+  // ════════════════════════════════
+  // RED
+  // ════════════════════════════════
+  "network": {
+    "interval": 1,
+    "format": "{icon}",
+
+    "format-icons": {
+      "wifi": "󰤨",
+      "ethernet": "󰈀",
+      "disconnected": "󰤭"
+    },
+
+    "tooltip-format": "{ifname} via {gwaddr}",
+    "max-length": 50
+  },
+
+  // ════════════════════════════════
+  // AUDIO (FIX DESYNC 🔥)
+  // ════════════════════════════════
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 {volume}%",
+
+    "scroll-step": 1, // 👈 IMPORTANTE para evitar 79 vs 80
+
+    "on-click": "pavucontrol",
+
+    "tooltip-format": "{desc} : {volume}%",
+
+    "format-icons": {
+      "headphone": "󰋋",
+      "hands-free": "󰋎",
+      "headset": "󰋎",
+      "phone": "󰏲",
+      "portable": "󰏲",
+      "car": "󰄋",
+      "default": ["󰕿", "󰖀", "󰕾"]
+    }
+  },
+
+  // ════════════════════════════════
+  // BATERÍA
+  // ════════════════════════════════
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+
+    "format": "{icon} {capacity}%",
+    "format-charging": "󱐋 {capacity}%",
+    "format-plugged": "󱘖 {capacity}%",
+    "format-full": "󰁹 Full",
+
+    "format-icons": [
+      "󰂎","󰁺","󰁻","󰁼","󰁽",
+      "󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"
+    ],
+
+    "tooltip-format": "{timeTo} — {power:.1f}W"
+  },
+
+  // ════════════════════════════════
+  // POWER PROFILE
+  // ════════════════════════════════
+  "power-profiles-daemon": {
+    "format": "{icon} {profile}",
+    "tooltip": true,
+
+    "tooltip-format": "Perfil: {profile}\nDriver: {driver}",
+
+    "format-icons": {
+      "default": "󰾅",
+      "performance": "󰈐",
+      "balanced": "󰾅",
+      "power-saver": "󰾆"
+    }
+  },
+
+  // ════════════════════════════════
+  // POWER MENU
+  // ════════════════════════════════
+  "custom/power": {
+    "format": "⏻",
+    "tooltip": true,
+    "tooltip-format": "Apagar / Sesión",
+
+    "on-click": "wlogout -n || systemctl poweroff"
+  }
+}

@@ -1,0 +1,269 @@
+/* ╔══════════════════════════════════════════════════════════╗ */
+/* ║  KASANE TETO — Waybar stylesheet                         ║ */
+/* ║  Paleta embebida — no requiere @import externo           ║ */
+/* ╚══════════════════════════════════════════════════════════╝ */
+
+/* ── Paleta Kasane Teto ─────────────────────────────────────── */
+@define-color background               #1a1218;
+@define-color surface                  #1a1218;
+@define-color surface_container        #2e1e2a;
+@define-color surface_container_high   #3d2838;
+@define-color surface_container_highest #4e3347;
+@define-color surface_container_low    #221620;
+@define-color surface_bright           #5e4055;
+
+@define-color on_surface               #f2dde4;
+@define-color on_surface_variant       #c9a0b0;
+@define-color inverse_surface          #f2dde4;
+
+@define-color primary                  #f4a0b8;
+@define-color primary_fixed            #d4547a;
+@define-color primary_fixed_dim        #c0334d;
+@define-color on_primary               #1a1218;
+
+@define-color secondary                #c9a0b0;
+@define-color on_secondary             #1a1218;
+@define-color secondary_container      #3d2838;
+@define-color on_secondary_container   #f2dde4;
+@define-color on_secondary_fixed_variant #a07888;
+
+@define-color tertiary                 #c47aa8;
+@define-color on_tertiary              #1a1218;
+
+@define-color error                    #c94060;
+@define-color on_error                 #f2dde4;
+
+@define-color outline                  #7a5a6a;
+@define-color outline_variant          #3d2838;
+
+/* ── Reset ─────────────────────────────────────────────────── */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font Propo", "Adwaita Sans", sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @on_surface;
+}
+
+/* ── Tooltip ────────────────────────────────────────────────── */
+tooltip {
+    background: @background;
+    border: 1px solid @primary_fixed;
+    border-radius: 12px;
+    color: @on_surface;
+}
+tooltip label {
+    padding: 5px;
+    color: @on_surface;
+}
+
+/* ── Píldora base — todos los módulos ───────────────────────── */
+#clock,
+#tray,
+#workspaces,
+#custom-swaync,
+#network,
+#pulseaudio,
+#battery,
+#power-profiles-daemon,
+#custom-power,
+#custom-media {
+    background-color: alpha(@surface_container, 0.82);
+    border-radius: 50px;
+    padding: 3px 12px;
+    margin: 4px 0;
+}
+
+/* ── Clock ──────────────────────────────────────────────────── */
+#clock {
+    color: @on_surface;
+    margin-left: 0;
+}
+
+/* ── Tray ───────────────────────────────────────────────────── */
+#tray {
+    padding: 3px 8px;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: alpha(@primary_fixed, 0.40);
+    border-radius: 50px;
+}
+
+/* ── Workspaces ─────────────────────────────────────────────── */
+#workspaces {
+    padding: 3px 4px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    margin: 0 1px;
+    border-radius: 50px;
+    color: @outline;
+    background: transparent;
+    min-width: 20px;
+    font-size: 11px;
+    transition: all 0.25s cubic-bezier(.55,-0.68,.48,1.682);
+}
+
+#workspaces button.active {
+    background: @primary_fixed;
+    color: @background;
+    min-width: 30px;
+    padding: 0 10px;
+    transition: all 0.25s cubic-bezier(.55,-0.68,.48,1.682);
+}
+
+#workspaces button:hover {
+    background: alpha(@primary, 0.20);
+    color: @primary;
+    min-width: 28px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button.urgent {
+    background: @error;
+    color: @background;
+    min-width: 28px;
+    animation: blink 0.6s linear infinite alternate;
+}
+
+@keyframes blink {
+    to { background: @primary_fixed; }
+}
+
+/* ── Notificaciones ─────────────────────────────────────────── */
+#custom-swaync {
+    color: @on_surface_variant;
+}
+
+#custom-swaync.notification {
+    color: @primary;
+}
+
+#custom-swaync.dnd-none,
+#custom-swaync.dnd-notification {
+    color: @outline;
+}
+
+/* ── Red ────────────────────────────────────────────────────── */
+#network {
+    color: @on_surface_variant;
+}
+
+#network.ethernet,
+#network.wifi {
+    color: @primary;
+}
+
+#network.disconnected {
+    color: @outline;
+}
+
+#network:hover {
+    color: @primary_fixed;
+}
+
+/* ── PulseAudio ─────────────────────────────────────────────── */
+#pulseaudio {
+    color: @on_surface_variant;
+}
+
+#pulseaudio.muted {
+    color: @outline;
+}
+
+#pulseaudio.bluetooth {
+    color: @primary;
+}
+
+#pulseaudio:hover {
+    color: @primary_fixed;
+}
+
+/* ── Batería ────────────────────────────────────────────────── */
+#battery {
+    color: @on_surface_variant;
+}
+
+#battery.good {
+    color: @on_surface_variant;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @primary;
+}
+
+#battery.warning:not(.charging) {
+    color: #e8a87c;
+}
+
+#battery.critical:not(.charging) {
+    color: @error;
+    animation: blink 0.5s linear infinite alternate;
+}
+
+/* ── Power profile ──────────────────────────────────────────── */
+#power-profiles-daemon {
+    color: @on_surface_variant;
+}
+
+#power-profiles-daemon.performance {
+    color: @error;
+}
+
+#power-profiles-daemon.balanced {
+    color: @on_surface_variant;
+}
+
+#power-profiles-daemon.power-saver {
+    color: #9bbf8a;
+}
+
+/* ── Power button ───────────────────────────────────────────── */
+#custom-power {
+    color: @on_surface_variant;
+    padding: 3px 10px;
+}
+
+#custom-power:hover {
+    color: @error;
+}
+
+/* ── MPRIS (media) ──────────────────────────────────────────── */
+#custom-media {
+    padding: 3px 16px;
+    color: @on_surface_variant;
+    background-color: alpha(@surface_container, 0.82);
+    transition: all 0.25s ease;
+}
+
+#custom-media.playing {
+    color: @primary;
+    background-color: alpha(@surface_container_high, 0.90);
+}
+
+#custom-media.paused {
+    color: @on_secondary_fixed_variant;
+    background-color: alpha(@surface_container, 0.70);
+}
+
+#custom-media.stopped {
+    color: @outline;
+    background-color: alpha(@surface_container, 0.40);
+}
+
+#custom-media:hover {
+    color: @primary_fixed;
+    background-color: alpha(@surface_container_highest, 0.95);
+}

@@ -1,0 +1,73 @@
+/* ROFI WALLPAPER GRID THEME - Material Darker */
+
+* {
+    /* Mismos colores que me pasaste */
+    bg0:    #212121;
+    bg1:    #2c2c2c;
+    fg0:    #eeffff;
+    fg1:    #b0b0b0;
+    accent: #f07178;
+    select: #f0717833;
+
+    background-color: transparent;
+    text-color:       @fg0;
+    font: "FiraCode Nerd Font Medium 10";
+}
+
+window {
+    width:            850px; /* Un poco más ancho para el grid */
+    border:           2px;
+    border-color:     @accent;
+    border-radius:    12px;
+    background-color: @bg0;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+}
+
+inputbar {
+    padding:          12px;
+    background-color: @bg1;
+    children:         [ prompt, entry ];
+}
+
+prompt {
+    text-color: @accent;
+}
+
+listview {
+    columns:      3; /* 3 columnas para que las fotos sean grandes */
+    lines:        2;
+    spacing:      20px;
+    padding:      20px;
+    fixed-height: false;
+    flow:         horizontal; /* Llena de izquierda a derecha */
+}
+
+element {
+    orientation:      vertical; /* Icono arriba, texto abajo */
+    padding:          15px;
+    border-radius:    10px;
+    spacing:          10px;
+}
+
+element selected {
+    background-color: @select;
+    border:           2px;
+    border-color:     @accent;
+}
+
+element-icon {
+    size:             180px; /* Tamaño de miniatura generoso */
+    horizontal-align: 0.5;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    text-color:       @fg1;
+}
+
+element selected text {
+    text-color:       @fg0;
+}

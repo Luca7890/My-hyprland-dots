@@ -1,0 +1,35 @@
+* {
+    background-image: none;
+    box-shadow: none;
+    transition: all 0.3s ease-in-out;
+}
+
+window {
+    background-color: rgba(12, 12, 12, 0.4); /* Fondo traslúcido */
+}
+
+button {
+    border-radius: 8px;
+    border: 2px solid rgba(255, 0, 63, 0.2); /* Borde sutil rojo Teto */
+    color: #FFFFFF;
+    background-color: rgba(30, 30, 30, 0.4);
+    background-repeat: no-repeat;
+    background-position: center 30%; /* Sube el icono para dejar espacio al texto */
+    background-size: 25%;
+    margin: 10px;
+    padding-bottom: 10px; /* Empuja el texto hacia abajo */
+}
+
+button:hover {
+    background-color: rgba(255, 0, 63, 0.6); /* Rojo Teto al pasar el mouse */
+    border: 2px solid #FF003F;
+    outline-style: none;
+}
+
+/* Rutas de iconos corregidas para distribuciones basadas en Arch */
+#lock { background-image: image(url("/usr/share/wlogout/icons/lock.png")); }
+#logout { background-image: image(url("/usr/share/wlogout/icons/logout.png")); }
+#suspend { background-image: image(url("/usr/share/wlogout/icons/suspend.png")); }
+#hibernate { background-image: image(url("/usr/share/wlogout/icons/hibernate.png")); }
+#shutdown { background-image: image(url("/usr/share/wlogout/icons/shutdown.png")); }
+#reboot { background-image: image(url("/usr/share/wlogout/icons/reboot.png")); }
